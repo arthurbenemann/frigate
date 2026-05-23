@@ -27,14 +27,35 @@
     "newCase": "New Case",
     "addExport": "Add Export",
     "editCase": "Edit Case",
-    "deleteCase": "Delete Case"
+    "deleteCase": "Delete Case",
+    "generateTimelapse": "Generate Timelapse"
+  },
+  "timelapse": {
+    "title": "Generate Timelapse",
+    "description": "Build a video from stored timelapse segments for a date range. Timelapse capture must be enabled for the camera.",
+    "camera": "Camera",
+    "cameraPlaceholder": "Select a camera",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "speed": "Speed (real seconds per second of video)",
+    "speedHint": "e.g. 3600 shows one hour of real time per second of video.",
+    "fps": "Frame rate (fps)",
+    "name": "Name (optional)",
+    "namePlaceholder": "Timelapse name",
+    "generate": "Generate",
+    "invalidRange": "End date must be after start date.",
+    "invalidSpeed": "Speed must be positive and frame rate at least 1."
   },
   "toast": {
+    "success": {
+      "timelapseStarted": "Timelapse generation started. It will appear in exports when finished."
+    },
     "error": {
       "renameExportFailed": "Failed to rename export: {{errorMessage}}",
       "assignCaseFailed": "Failed to update case assignment: {{errorMessage}}",
       "caseSaveFailed": "Failed to save case: {{errorMessage}}",
-      "caseDeleteFailed": "Failed to delete case: {{errorMessage}}"
+      "caseDeleteFailed": "Failed to delete case: {{errorMessage}}",
+      "timelapseFailed": "Failed to generate timelapse: {{errorMessage}}"
     }
   },
   "deleteCase": {

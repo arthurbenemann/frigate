@@ -42,6 +42,7 @@ import {
   ExportJob,
 } from "@/types/export";
 import OptionAndInputDialog from "@/components/overlay/dialog/OptionAndInputDialog";
+import GenerateTimelapseDialog from "@/components/overlay/GenerateTimelapseDialog";
 import axios from "axios";
 import { FrigateConfig } from "@/types/frigateConfig";
 
@@ -59,6 +60,7 @@ import { useTranslation } from "react-i18next";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import {
   LuDownload,
+  LuFilm,
   LuFolderPlus,
   LuFolderX,
   LuPencil,
@@ -377,6 +379,7 @@ function Exports() {
   const [caseForAddExport, setCaseForAddExport] = useState<
     ExportCase | undefined
   >();
+  const [showGenerateTimelapse, setShowGenerateTimelapse] = useState(false);
 
   const onHandleDelete = useCallback(() => {
     if (!deleteClip) {
@@ -577,6 +580,12 @@ function Exports() {
         onSave={handleSaveCase}
       />
 
+      <GenerateTimelapseDialog
+        open={showGenerateTimelapse}
+        onOpenChange={setShowGenerateTimelapse}
+        onGenerated={() => updateExports()}
+      />
+
       <CaseAddExportDialog
         exportCase={caseForAddExport}
         availableExports={uncategorizedExports}
@@ -758,6 +767,17 @@ function Exports() {
                   filters={["cameras"]}
                   onUpdateFilter={setExportFilter}
                 />
+                <Button
+                  className="flex items-center gap-2.5 rounded-lg"
+                  variant="default"
+                  size="sm"
+                  onClick={() => setShowGenerateTimelapse(true)}
+                >
+                  <LuFilm className="text-secondary-foreground" />
+                  <div className="text-primary">
+                    {t("toolbar.generateTimelapse")}
+                  </div>
+                </Button>
                 {isAdmin && (
                   <Button
                     className="flex items-center gap-2.5 rounded-lg"

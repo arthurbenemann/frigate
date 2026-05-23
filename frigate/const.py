@@ -12,6 +12,10 @@ FACE_DIR = f"{CLIPS_DIR}/faces"
 THUMB_DIR = f"{CLIPS_DIR}/thumbs"
 RECORD_DIR = f"{BASE_DIR}/recordings"
 TRIGGER_DIR = f"{CLIPS_DIR}/triggers"
+TIMELAPSE_DIR = f"{CLIPS_DIR}/timelapse"
+# stored timelapse segments hold one captured frame per video frame at this
+# fixed rate; playback speed and frame rate are chosen at generation time
+TIMELAPSE_SEGMENT_FPS = 30
 BIRDSEYE_PIPE = "/tmp/cache/birdseye"
 CACHE_DIR = "/tmp/cache"
 REPLAY_CAMERA_PREFIX = "_replay_"

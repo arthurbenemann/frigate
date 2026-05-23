@@ -74,6 +74,7 @@ const sidebars: SidebarsConfig = {
         "configuration/review",
         "configuration/record",
         "configuration/snapshots",
+        "configuration/timelapse",
         "configuration/motion_detection",
         "configuration/birdseye",
         "configuration/live",

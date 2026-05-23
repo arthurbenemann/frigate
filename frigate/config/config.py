@@ -53,6 +53,7 @@ from .camera.objects import FilterConfig, ObjectConfig
 from .camera.record import RecordConfig
 from .camera.review import ReviewConfig
 from .camera.snapshots import SnapshotsConfig
+from .camera.timelapse import TimelapseConfig
 from .camera.timestamp import TimestampStyleConfig
 from .camera_group import CameraGroupConfig
 from .classification import (
@@ -525,6 +526,11 @@ class FrigateConfig(FrigateBaseModel):
         title="Snapshots",
         description="Settings for API-generated snapshots of tracked objects for all cameras; can be overridden per-camera.",
     )
+    timelapse: TimelapseConfig = Field(
+        default_factory=TimelapseConfig,
+        title="Timelapse",
+        description="Long-term interval timelapse settings applied to cameras unless overridden per-camera.",
+    )
     timestamp_style: TimestampStyleConfig = Field(
         default_factory=TimestampStyleConfig,
         title="Timestamp style",
@@ -659,6 +665,7 @@ class FrigateConfig(FrigateBaseModel):
                 "lpr": ...,
                 "record": ...,
                 "snapshots": ...,
+                "timelapse": ...,
                 "live": ...,
                 "objects": ...,
                 "review": ...,

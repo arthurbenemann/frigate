@@ -133,6 +133,15 @@ class Previews(Model):
     duration = FloatField()
 
 
+class TimelapseSegment(Model):
+    id = CharField(null=False, primary_key=True, max_length=40)
+    camera = CharField(index=True, max_length=20)
+    path = CharField(unique=True)
+    start_time = DateTimeField()
+    end_time = DateTimeField()
+    duration = FloatField()
+
+
 # Used for temporary table in record/cleanup.py
 class RecordingsToDelete(Model):
     id = CharField(null=False, primary_key=False, max_length=30)

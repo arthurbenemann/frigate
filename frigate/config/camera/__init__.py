@@ -12,6 +12,7 @@ from .onvif import *  # noqa: F403
 from .record import *  # noqa: F403
 from .review import *  # noqa: F403
 from .snapshots import *  # noqa: F403
+from .timelapse import *  # noqa: F403
 from .timestamp import *  # noqa: F403
 from .ui import *  # noqa: F403
 from .zone import *  # noqa: F403

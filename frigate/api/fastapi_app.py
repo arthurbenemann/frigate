@@ -27,6 +27,7 @@ from frigate.api import (
     preview,
     record,
     review,
+    timelapse,
 )
 from frigate.api.auth import get_jwt_secret, limiter, require_admin_by_default
 from frigate.comms.dispatcher import Dispatcher
@@ -138,6 +139,7 @@ def create_fastapi_app(
     app.include_router(preview.router)
     app.include_router(notification.router)
     app.include_router(export.router)
+    app.include_router(timelapse.router)
     app.include_router(event.router)
     app.include_router(media.router)
     app.include_router(motion_search.router)

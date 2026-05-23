@@ -13,7 +13,13 @@ from playhouse.sqlite_ext import SqliteExtDatabase
 
 from frigate.config import CameraConfig, FrigateConfig, RetainModeEnum
 from frigate.const import CACHE_DIR, CLIPS_DIR, MAX_WAL_SIZE, RECORD_DIR
-from frigate.models import Previews, Recordings, ReviewSegment, UserReviewStatus
+from frigate.models import (
+    Previews,
+    Recordings,
+    ReviewSegment,
+    TimelapseSegment,
+    UserReviewStatus,
+)
 from frigate.util.builtin import clear_and_unlink
 from frigate.util.media import remove_empty_directories
 
@@ -43,6 +49,44 @@ class RecordingCleanup(threading.Thread):
             if p.stat().st_mtime < (datetime.datetime.now().timestamp() - 60 * 60):
                 logger.debug("Deleting tmp clip.")
                 clear_and_unlink(p)
+
+    def expire_timelapse_segments(self) -> None:
+        """Delete timelapse segments older than each camera's retention."""
+        now = datetime.datetime.now().timestamp()
+
+        for camera, config in self.config.cameras.items():
+            retain_days = config.timelapse.retain_days
+
+            if retain_days <= 0:
+                continue
+
+            expire_before = now - retain_days * 86400
+
+            expired = (
+                TimelapseSegment.select(TimelapseSegment.id, TimelapseSegment.path)
+                .where(
+                    (TimelapseSegment.camera == camera)
+                    & (TimelapseSegment.end_time < expire_before)
+                )
+                .namedtuples()
+                .iterator()
+            )
+
+            deleted_ids: list[str] = []
+
+            for segment in expired:
+                Path(segment.path).unlink(missing_ok=True)
+                deleted_ids.append(segment.id)
+
+            if deleted_ids:
+                TimelapseSegment.delete().where(
+                    TimelapseSegment.id << deleted_ids
+                ).execute()
+                logger.debug(
+                    "Expired %d timelapse segments for %s",
+                    len(deleted_ids),
+                    camera,
+                )
 
     def truncate_wal(self) -> None:
         """check if the WAL needs to be manually truncated."""
@@ -389,4 +433,5 @@ class RecordingCleanup(threading.Thread):
                 self.clean_tmp_clips()
                 maybe_empty_dirs = self.expire_recordings()
                 remove_empty_directories(Path(RECORD_DIR), maybe_empty_dirs)
+                self.expire_timelapse_segments()
                 self.truncate_wal()

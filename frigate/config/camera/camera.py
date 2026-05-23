@@ -38,6 +38,7 @@ from .profile import CameraProfileConfig
 from .record import RecordConfig
 from .review import ReviewConfig
 from .snapshots import SnapshotsConfig
+from .timelapse import TimelapseConfig
 from .timestamp import TimestampStyleConfig
 from .ui import CameraUiConfig
 from .zone import ZoneConfig
@@ -142,6 +143,11 @@ class CameraConfig(FrigateBaseModel):
         default_factory=SnapshotsConfig,
         title="Snapshots",
         description="Settings for API-generated snapshots of tracked objects for this camera.",
+    )
+    timelapse: TimelapseConfig = Field(
+        default_factory=TimelapseConfig,
+        title="Timelapse",
+        description="Long-term, storage-efficient interval timelapse settings for this camera.",
     )
     timestamp_style: TimestampStyleConfig = Field(
         default_factory=TimestampStyleConfig,

@@ -1198,6 +1198,34 @@
       "description": "Encode quality for saved snapshots (0-100)."
     }
   },
+  "timelapse": {
+    "label": "Timelapse",
+    "description": "Long-term interval timelapse settings applied to cameras unless overridden per-camera.",
+    "enabled": {
+      "label": "Enable timelapse capture",
+      "description": "Capture a single frame at a fixed interval and build storage-efficient long-term timelapse segments."
+    },
+    "interval": {
+      "label": "Capture interval",
+      "description": "Seconds of real time between captured frames. This is the capture cadence and sets the finest detail available; the playback speed and frame rate are chosen when generating a video."
+    },
+    "height": {
+      "label": "Frame height",
+      "description": "Height in pixels to scale captured frames to; width follows the stream aspect ratio. Leave empty to keep the full resolution of the highest-resolution stream."
+    },
+    "quality": {
+      "label": "Timelapse quality",
+      "description": "Encoding quality for timelapse segments (very_low, low, medium, high, very_high)."
+    },
+    "codec": {
+      "label": "Timelapse codec",
+      "description": "Codec used for timelapse segments. h265 produces smaller files; h264 has wider playback compatibility."
+    },
+    "retain_days": {
+      "label": "Retention days",
+      "description": "Number of days to retain timelapse segments. Independent of recording retention."
+    }
+  },
   "timestamp_style": {
     "label": "Timestamp style",
     "description": "Styling options for in-feed timestamps applied to debug view and snapshots.",

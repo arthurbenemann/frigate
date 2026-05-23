@@ -63,6 +63,7 @@ from frigate.models import (
     RecordingsToDelete,
     Regions,
     ReviewSegment,
+    TimelapseSegment,
     Timeline,
     Trigger,
     User,
@@ -74,6 +75,7 @@ from frigate.ptz.onvif import OnvifController
 from frigate.record.cleanup import RecordingCleanup
 from frigate.record.export import migrate_exports
 from frigate.record.record import RecordProcess
+from frigate.record.timelapse import TimelapseManager
 from frigate.review.review import ReviewProcess
 from frigate.stats.emitter import StatsEmitter
 from frigate.stats.util import stats_init
@@ -281,6 +283,7 @@ class FrigateApp:
             Regions,
             ReviewSegment,
             Timeline,
+            TimelapseSegment,
             User,
             Trigger,
         ]
@@ -456,6 +459,10 @@ class FrigateApp:
         self.record_cleanup = RecordingCleanup(self.config, self.stop_event)
         self.record_cleanup.start()
 
+    def start_timelapse_manager(self) -> None:
+        self.timelapse_manager = TimelapseManager(self.config, self.stop_event)
+        self.timelapse_manager.start()
+
     def start_storage_maintainer(self) -> None:
         self.storage_maintainer = StorageMaintainer(self.config, self.stop_event)
         self.storage_maintainer.start()
@@ -610,6 +617,7 @@ class FrigateApp:
         self.start_event_processor()
         self.start_event_cleanup()
         self.start_record_cleanup()
+        self.start_timelapse_manager()
         self.start_watchdog()
 
         self.init_auth()

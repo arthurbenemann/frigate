@@ -285,6 +285,14 @@ export interface CameraConfig {
     };
     timestamp: boolean;
   };
+  timelapse: {
+    enabled: boolean;
+    interval: number;
+    height: number | null;
+    quality: string;
+    codec: string;
+    retain_days: number;
+  };
   timestamp_style: {
     color: {
       blue: number;
